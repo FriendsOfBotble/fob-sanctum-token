@@ -6,13 +6,7 @@ Easy management your Sanctum token in your Botble CMS.
 
 ## Installation
 
-There have two ways to install this package, if you have **Composer**, just run following command to install:
-
-```
-composer require datlechin/botble-sanctum-token
-```
-
-Or use manually way:
+Use manually way:
 
 - Download and rename folder `botble-sanctum-token-master` to `sanctum-token`.
 - Copy folder log-viewer into `/platform/plugins`.
