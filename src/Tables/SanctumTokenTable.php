@@ -34,9 +34,6 @@ class SanctumTokenTable extends TableAbstract
         }
     }
 
-    /**
-     * @throws \Exception
-     */
     public function ajax(): JsonResponse
     {
         $data = $this->table

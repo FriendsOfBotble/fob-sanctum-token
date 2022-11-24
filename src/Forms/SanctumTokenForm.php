@@ -8,7 +8,7 @@ use Datlechin\SanctumToken\Models\PersonalAccessToken;
 
 class SanctumTokenForm extends FormAbstract
 {
-    public function buildForm()
+    public function buildForm(): FormAbstract|SanctumTokenForm
     {
         return $this
             ->setupModel(new PersonalAccessToken())

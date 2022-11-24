@@ -16,7 +16,7 @@ class SanctumTokenServiceProvider extends ServiceProvider
 {
     use LoadAndPublishDataTrait;
 
-    public function register()
+    public function register(): void
     {
         $this
             ->setNamespace('plugins/sanctum-token')
@@ -31,7 +31,7 @@ class SanctumTokenServiceProvider extends ServiceProvider
         });
     }
 
-    public function boot()
+    public function boot(): void
     {
         Sanctum::usePersonalAccessTokenModel(PersonalAccessToken::class);
 

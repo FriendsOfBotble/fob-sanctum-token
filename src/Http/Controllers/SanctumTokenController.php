@@ -41,7 +41,7 @@ class SanctumTokenController extends BaseController
             ->renderForm();
     }
 
-    public function store(StoreSanctumTokenRequest $request, BaseHttpResponse $response)
+    public function store(StoreSanctumTokenRequest $request, BaseHttpResponse $response): BaseHttpResponse
     {
         $accessToken = $request->user()->createToken($request->input('name'));
 
@@ -55,7 +55,7 @@ class SanctumTokenController extends BaseController
             ->setMessage(trans('core/base::notices.create_success_message'));
     }
 
-    public function destroy(Request $request, $id, BaseHttpResponse $response)
+    public function destroy(Request $request, $id, BaseHttpResponse $response): BaseHttpResponse
     {
         try {
             $personalAccessToken = $this->sanctumTokenRepository->findOrFail($id);
@@ -72,9 +72,8 @@ class SanctumTokenController extends BaseController
         }
     }
 
-    public function deletes(Request $request, BaseHttpResponse $response)
+    public function deletes(Request $request, BaseHttpResponse $response): BaseHttpResponse
     {
-
         return $this->executeDeleteItems(
             $request,
             $response,
