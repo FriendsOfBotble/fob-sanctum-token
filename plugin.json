@@ -1,9 +1,10 @@
 {
+    "id": "datlechin/botble-sanctum-token",
     "name": "Sanctum Token",
     "namespace": "Datlechin\\SanctumToken\\",
     "provider": "Datlechin\\SanctumToken\\Providers\\SanctumTokenServiceProvider",
     "author": "Ngo Quoc Dat",
     "url": "https://github.com/datlechin",
-    "version": "0.1",
+    "version": "1.0.1",
     "description": "Easy management your Sanctum token."
 }
