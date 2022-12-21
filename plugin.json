@@ -5,6 +5,6 @@
     "provider": "Datlechin\\SanctumToken\\Providers\\SanctumTokenServiceProvider",
     "author": "Ngo Quoc Dat",
     "url": "https://github.com/datlechin",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Easy management your Sanctum token."
 }

@@ -9,8 +9,8 @@ Easy management your Sanctum token in your Botble CMS.
 Use manually way:
 
 - Download and rename folder `botble-sanctum-token-master` to `sanctum-token`.
-- Copy folder log-viewer into `/platform/plugins`.
-- Go to `Admin -> Plugins` then activate plugin `Sanctum Token`.
+- Copy folder `sanctum-token` into `/platform/plugins`.
+- Go to `Admin -> Plugins` then activate `Sanctum Token` plugin.
 
 ## Credits
 
