@@ -45,8 +45,6 @@ class SanctumTokenController extends BaseController
     {
         $accessToken = $request->user()->createToken($request->input('name'));
 
-        event(new CreatedContentEvent(SANCTUM_TOKEN_MODULE_SCREEN_NAME, $request, $accessToken));
-
         session()->flash('plainTextToken', $accessToken->plainTextToken);
 
         return $response
@@ -55,14 +53,12 @@ class SanctumTokenController extends BaseController
             ->setMessage(trans('core/base::notices.create_success_message'));
     }
 
-    public function destroy(Request $request, $id, BaseHttpResponse $response): BaseHttpResponse
+    public function destroy($id, BaseHttpResponse $response): BaseHttpResponse
     {
         try {
             $personalAccessToken = $this->sanctumTokenRepository->findOrFail($id);
 
             $this->sanctumTokenRepository->delete($personalAccessToken);
-
-            event(new DeletedContentEvent(SANCTUM_TOKEN_MODULE_SCREEN_NAME, $request, $personalAccessToken));
 
             return $response->setMessage(trans('core/base::notices.delete_success_message'));
         } catch (Exception $exception) {

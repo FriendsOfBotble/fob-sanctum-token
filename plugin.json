@@ -6,5 +6,6 @@
     "author": "Ngo Quoc Dat",
     "url": "https://github.com/datlechin",
     "version": "1.0.2",
-    "description": "Easy management your Sanctum token."
+    "description": "Easy management your Sanctum token.",
+    "minimum_core_version": "6.8.3"
 }
