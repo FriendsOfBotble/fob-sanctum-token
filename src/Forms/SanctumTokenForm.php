@@ -8,9 +8,9 @@ use Datlechin\SanctumToken\Models\PersonalAccessToken;
 
 class SanctumTokenForm extends FormAbstract
 {
-    public function buildForm(): FormAbstract|SanctumTokenForm
+    public function buildForm(): void
     {
-        return $this
+        $this
             ->setupModel(new PersonalAccessToken())
             ->setValidatorClass(StoreSanctumTokenRequest::class)
             ->add('name', 'text', [
