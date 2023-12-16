@@ -2,7 +2,7 @@
 
 Easy management your Sanctum token in your Botble CMS.
 
-![Demo](https://github.com/FriendsOfBotble/sanctum-token/assets/114894084/26c7f106-cb97-4ed4-979c-e6ed04c0483e)
+![Demo](https://github.com/FriendsOfBotble/sanctum-token/assets/114894084/1964e133-f3bb-48bb-8625-f10dca719b50)
 
 ## Installation
 
