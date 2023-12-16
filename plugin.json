@@ -1,11 +1,11 @@
 {
-    "id": "datlechin/botble-sanctum-token",
+    "id": "friendsofbotble/sanctum-token",
     "name": "Sanctum Token",
-    "namespace": "Datlechin\\SanctumToken\\",
-    "provider": "Datlechin\\SanctumToken\\Providers\\SanctumTokenServiceProvider",
-    "author": "Ngo Quoc Dat",
-    "url": "https://github.com/datlechin",
-    "version": "1.0.2",
+    "namespace": "FriendsOfBotble\\SanctumToken\\",
+    "provider": "FriendsOfBotble\\SanctumToken\\Providers\\SanctumTokenServiceProvider",
+    "author": "FriendsOfBotble",
+    "url": "https://ngoquocdat.dev",
+    "version": "1.1.0",
     "description": "Easy management your Sanctum token.",
-    "minimum_core_version": "6.8.3"
+    "minimum_core_version": "7.0.0"
 }

@@ -1,80 +1,59 @@
 <?php
 
-namespace Datlechin\SanctumToken\Http\Controllers;
+namespace FriendsOfBotble\SanctumToken\Http\Controllers;
 
-use Botble\Base\Events\CreatedContentEvent;
-use Botble\Base\Events\DeletedContentEvent;
-use Botble\Base\Forms\FormBuilder;
 use Botble\Base\Http\Controllers\BaseController;
 use Botble\Base\Http\Responses\BaseHttpResponse;
-use Botble\Base\Traits\HasDeleteManyItemsTrait;
-use Datlechin\SanctumToken\Forms\SanctumTokenForm;
-use Datlechin\SanctumToken\Http\Requests\StoreSanctumTokenRequest;
-use Datlechin\SanctumToken\Repositories\Interfaces\SanctumTokenInterface;
-use Datlechin\SanctumToken\Tables\SanctumTokenTable;
 use Exception;
+use FriendsOfBotble\SanctumToken\Forms\SanctumTokenForm;
+use FriendsOfBotble\SanctumToken\Http\Requests\StoreSanctumTokenRequest;
+use FriendsOfBotble\SanctumToken\Models\PersonalAccessToken;
+use FriendsOfBotble\SanctumToken\Tables\SanctumTokenTable;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class SanctumTokenController extends BaseController
 {
-    use HasDeleteManyItemsTrait;
-
-    public function __construct(protected SanctumTokenInterface $sanctumTokenRepository)
+    public function index(SanctumTokenTable $sanctumTokenTable): JsonResponse|View
     {
+        $this->pageTitle(__('plugins/sanctum-token::sanctum-token.name'));
+
+        return $sanctumTokenTable->renderTable();
     }
 
-    public function index(SanctumTokenTable $dataTable): JsonResponse|View|string
+    public function create()
     {
-        page_title()->setTitle(__('plugins/sanctum-token::sanctum-token.name'));
+        $this->pageTitle(trans('plugins/sanctum-token::sanctum-token.create'));
 
-        return $dataTable->renderTable();
+        return SanctumTokenForm::create()->renderForm();
     }
 
-    public function create(FormBuilder $formBuilder)
-    {
-        page_title()->setTitle(trans('plugins/sanctum-token::sanctum-token.create'));
-
-        return $formBuilder
-            ->create(SanctumTokenForm::class)
-            ->renderForm();
-    }
-
-    public function store(StoreSanctumTokenRequest $request, BaseHttpResponse $response): BaseHttpResponse
+    public function store(StoreSanctumTokenRequest $request): BaseHttpResponse
     {
         $accessToken = $request->user()->createToken($request->input('name'));
 
         session()->flash('plainTextToken', $accessToken->plainTextToken);
 
-        return $response
+        return $this
+            ->httpResponse()
             ->setPreviousUrl(route('sanctum-token.index'))
             ->setNextUrl(route('sanctum-token.index'))
-            ->setMessage(trans('core/base::notices.create_success_message'));
+            ->withCreatedSuccessMessage();
     }
 
-    public function destroy($id, BaseHttpResponse $response): BaseHttpResponse
+    public function destroy(string $id): BaseHttpResponse
     {
         try {
-            $personalAccessToken = $this->sanctumTokenRepository->findOrFail($id);
+            PersonalAccessToken::findOrFail($id)->delete();
 
-            $this->sanctumTokenRepository->delete($personalAccessToken);
-
-            return $response->setMessage(trans('core/base::notices.delete_success_message'));
+            return $this
+                ->httpResponse()
+                ->setMessage(trans('core/base::notices.delete_success_message'));
         } catch (Exception $exception) {
-            return $response
+            return $this
+                ->httpResponse()
                 ->setError()
                 ->setMessage($exception->getMessage());
         }
-    }
-
-    public function deletes(Request $request, BaseHttpResponse $response): BaseHttpResponse
-    {
-        return $this->executeDeleteItems(
-            $request,
-            $response,
-            $this->sanctumTokenRepository,
-            SANCTUM_TOKEN_MODULE_SCREEN_NAME
-        );
     }
 }

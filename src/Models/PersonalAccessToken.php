@@ -1,6 +1,6 @@
 <?php
 
-namespace Datlechin\SanctumToken\Models;
+namespace FriendsOfBotble\SanctumToken\Models;
 
 use Botble\Base\Contracts\BaseModel;
 use Botble\Base\Models\Concerns\HasBaseEloquentBuilder;

@@ -2,28 +2,29 @@
 
 @section('content')
     @if(session()->has('plainTextToken'))
-        <div class="note note-success">
-            {{ __('This is your new personal access token, this token only show 1 time, make sure you have copied it.') }}
-            <div class="alert alert-warning mt-3">
-                <span id="token" class="fw-bold">{{ session('plainTextToken') }}</span>
-                <span class="badge badge-success cursor-pointer" onclick="copyToClipboard()">
-                    <i class="fas fa-copy"></i>
-                </span>
-            </div>
-        </div>
+        <x-core::alert
+            type="success"
+            :title="__('This is your new personal access token, this token only show 1 time, make sure you have copied it.')"
+        >
+            <div class="d-flex align-items-center gap-1 mt-2">
+                <code>{{ session('plainTextToken') }}</code>
 
-        <script>
-            function copyToClipboard()  {
-                let plainTextToken = document.getElementById('token').innerText;
-                const input = document.createElement('input');
-                input.value = plainTextToken;
-                document.body.appendChild(input);
-                input.select();
-                document.execCommand('copy');
-                document.body.removeChild(input);
-                toastr.info('{{ __('Copy token to clipboard successfully!') }}')
-            }
-        </script>
+                <a
+                    href="javascript:void(0);"
+                    data-bb-toggle="clipboard"
+                    data-clipboard-action="copy"
+                    data-clipboard-text="{{ session('plainTextToken') }}"
+                    data-clipboard-message="{{ trans('core/table::table.copied') }}"
+                    data-bs-toggle="tooltip"
+                    title="{{ trans('core/table::table.copy') }}"
+                    class="text-muted text-center text-decoration-none"
+                >
+                    <span class="sr-only">{{ trans('core/table::table.copy') }}</span>
+                    <x-core::icon name="ti ti-clipboard" />
+                </a>
+            </div>
+        </x-core::alert>
     @endif
+
     @include('core/table::base-table')
 @stop
