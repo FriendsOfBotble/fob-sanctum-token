@@ -44,7 +44,7 @@ class SanctumTokenController extends BaseController
     public function destroy(string $id): BaseHttpResponse
     {
         try {
-            PersonalAccessToken::findOrFail($id)->delete();
+            PersonalAccessToken::query()->findOrFail($id)->delete();
 
             return $this
                 ->httpResponse()
