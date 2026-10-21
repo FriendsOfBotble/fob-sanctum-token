@@ -26,15 +26,6 @@ class SanctumTokenTable extends TableAbstract
             ->addColumns([
                 IdColumn::make(),
                 NameColumn::make(),
-                FormattedColumn::make('tokenable_type')
-                    ->label(trans('plugins/sanctum-token::sanctum-token.owner'))
-                    ->getValueUsing(
-                        fn (FormattedColumn $column) => sprintf(
-                            '%s #%s',
-                            class_basename($column->getItem()->tokenable_type),
-                            $column->getItem()->tokenable_id
-                        )
-                    ),
                 FormattedColumn::make('abilities')
                     ->label(trans('plugins/sanctum-token::sanctum-token.abilities'))
                     ->getValueUsing(fn (FormattedColumn $column, $value) => implode(', ', (array) $value)),
@@ -46,6 +37,17 @@ class SanctumTokenTable extends TableAbstract
                     ->withEmptyState(trans('plugins/sanctum-token::sanctum-token.never')),
                 CreatedAtColumn::make(),
             ])
+            ->when(auth()->user()?->isSuperUser(), fn (self $table) => $table->addColumn(
+                FormattedColumn::make('tokenable_type')
+                    ->label(trans('plugins/sanctum-token::sanctum-token.owner'))
+                    ->getValueUsing(
+                        fn (FormattedColumn $column) => sprintf(
+                            '%s #%s',
+                            class_basename($column->getItem()->tokenable_type),
+                            $column->getItem()->tokenable_id
+                        )
+                    )
+            ))
             ->addBulkAction(DeleteTokensBulkAction::make()->permission('sanctum-token.destroy'))
             ->queryUsing(fn (Builder $query) => $query
                 ->manageableBy(auth()->user())
