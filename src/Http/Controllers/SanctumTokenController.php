@@ -30,7 +30,13 @@ class SanctumTokenController extends BaseController
 
     public function store(StoreSanctumTokenRequest $request): BaseHttpResponse
     {
-        $accessToken = $request->user()->createToken($request->input('name'));
+        $expiresAt = $request->date('expires_at')?->endOfDay();
+
+        $accessToken = $request->user()->createToken(
+            $request->input('name'),
+            $request->input('abilities') ?: ['*'],
+            $expiresAt
+        );
 
         session()->flash('plainTextToken', $accessToken->plainTextToken);
 
@@ -44,7 +50,10 @@ class SanctumTokenController extends BaseController
     public function destroy(string $id): BaseHttpResponse
     {
         try {
-            PersonalAccessToken::query()->findOrFail($id)->delete();
+            PersonalAccessToken::query()
+                ->manageableBy(auth()->user())
+                ->findOrFail($id)
+                ->delete();
 
             return $this
                 ->httpResponse()

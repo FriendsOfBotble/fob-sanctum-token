@@ -11,6 +11,8 @@ class StoreSanctumTokenRequest extends Request
         return [
             'name' => ['required', 'string', 'max:255'],
             'abilities' => ['nullable', 'array'],
+            'abilities.*' => ['string', 'max:255'],
+            'expires_at' => ['nullable', 'date', 'after:today'],
         ];
     }
 }
