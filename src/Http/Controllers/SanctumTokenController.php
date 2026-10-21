@@ -32,11 +32,7 @@ class SanctumTokenController extends BaseController
     {
         $expiresAt = $request->date('expires_at')?->endOfDay();
 
-        $accessToken = $request->user()->createToken(
-            $request->input('name'),
-            $request->input('abilities') ?: ['*'],
-            $expiresAt
-        );
+        $accessToken = $request->user()->createToken($request->input('name'), ['*'], $expiresAt);
 
         session()->flash('plainTextToken', $accessToken->plainTextToken);
 

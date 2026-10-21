@@ -28,7 +28,7 @@ class SanctumTokenTable extends TableAbstract
                 NameColumn::make(),
                 FormattedColumn::make('abilities')
                     ->label(trans('plugins/sanctum-token::sanctum-token.abilities'))
-                    ->getValueUsing(fn (FormattedColumn $column, $value) => implode(', ', (array) $value)),
+                    ->getValueUsing(fn (FormattedColumn $column, $value) => e(implode(', ', (array) $value))),
                 DateTimeColumn::make('last_used_at')
                     ->label(trans('plugins/sanctum-token::sanctum-token.last_used_at'))
                     ->withEmptyState(),
@@ -41,11 +41,11 @@ class SanctumTokenTable extends TableAbstract
                 FormattedColumn::make('tokenable_type')
                     ->label(trans('plugins/sanctum-token::sanctum-token.owner'))
                     ->getValueUsing(
-                        fn (FormattedColumn $column) => sprintf(
+                        fn (FormattedColumn $column) => e(sprintf(
                             '%s #%s',
                             class_basename($column->getItem()->tokenable_type),
                             $column->getItem()->tokenable_id
-                        )
+                        ))
                     )
             ))
             ->addBulkAction(DeleteTokensBulkAction::make()->permission('sanctum-token.destroy'))
